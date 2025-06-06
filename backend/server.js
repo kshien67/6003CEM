@@ -1,33 +1,25 @@
 const express = require('express');
-const axios = require('axios');
 const cors = require('cors');
+const authRoutes = require('./routes/auth');
+const newsRoutes = require('./new_api');
+const connectDB = require('./connect');   // Import the db connection
 
 const app = express();
+
+// Middleware
 app.use(cors());
+app.use(express.json());
 
-const NEWS_API_KEY = 'd8f7aa07fd4c44e48a4f830950b93cc2';
+// Connect to MongoDB
+connectDB();
 
-app.get('/api/crypto-news', async (req, res) => {
-  try {
-    // Get limit from query, default to 100 (or whatever max you want)
-    const limit = req.query.limit ? Number(req.query.limit) : 1000;
+// Routes
+app.use('/api', authRoutes);
+app.use('/api', newsRoutes);
 
-    const response = await axios.get('https://newsapi.org/v2/everything', {
-      params: {
-        q: 'crypto',
-        sortBy: 'publishedAt',
-        language: 'en',
-        pageSize: limit,
-        apiKey: NEWS_API_KEY,
-      },
-    });
-
-    res.json(response.data);
-  } catch (error) {
-    console.error('Error fetching news:', error);
-    res.status(500).json({ error: 'News fetch failed' });
-  }
+// Start server
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
 
-const PORT = 5000;
-app.listen(PORT, () => console.log(`Backend running on http://localhost:${PORT}`));
