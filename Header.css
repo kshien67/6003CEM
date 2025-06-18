@@ -1,0 +1,74 @@
+.header {
+  position: fixed;          /* Fix the header to the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;            /* Make sure it stays above other content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #1e1e2f;
+  color: white;
+  height: 60px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-profile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+}
+
+.profile {
+  height: 40px;
+  border-radius: 50%;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.welcome-text {
+  font-weight: bold;
+  color: white;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #2e2e3e;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 9999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.dropdown-menu button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+
+.dropdown-menu button:hover {
+  background-color: #444;
+  border-radius: 4px;
+}

@@ -1,0 +1,121 @@
+/* Fixed header */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #1e1e2f;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+/* Container below header, full viewport minus header */
+.container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* prevent container scroll */
+}
+
+/* Top area with fixed height */
+.top {
+  display: flex;
+  height: 400px;  /* fixed bigger height */
+  border-bottom: 2px solid #ccc;
+}
+
+/* A1 and A2 take equal width */
+.top-left,
+.top-right {
+  flex: 1;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.top-right {
+  border-right: none;
+}
+
+/* Bottom area fills rest and scrolls internally */
+.bottom {
+  flex: 1; /* fill remaining height */
+  overflow-y: auto;
+  padding: 20px;
+}
+
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.pagination button:hover {
+  background-color: #e8e8e8;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* Full Page News Styles */
+.full-page-news {
+  width: 100%
+  bottom = 10px;
+}
+
+.full-page-news .news-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* match or exceed the height of your fixed header */
+.page-content {
+  padding-top: 70px; 
+}
+
+/* Update*/
+/* Bookmark Button Styles */
+.bookmark-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc; /* Default gray color */
+  padding: 5px;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.bookmark-btn:hover {
+  transform: scale(1.2);
+}
+
+.bookmark-btn.bookmarked {
+  color: #FFD700; /* Gold color when bookmarked */
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+}
+
+/* Article Header Styles */
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
