@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import MiniChart from './MiniCurrencyChart';
 
 function TopCurrencyList() {
   const [allRates, setAllRates] = useState([]);
@@ -7,6 +9,7 @@ function TopCurrencyList() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(null);
+  const [userFavourites, setUserFavourites] = useState([]);
 
   useEffect(() => {
     const fetchTopRates = async () => {
@@ -33,7 +36,22 @@ function TopCurrencyList() {
       }
     };
 
+    const fetchFavourites = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      try {
+        const res = await axios.get('http://localhost:5000/api/exchange/favourites', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUserFavourites(res.data);
+      } catch (err) {
+        console.error("❌ Failed to fetch user favourites:", err);
+      }
+    };
+
     fetchTopRates();
+    fetchFavourites();
   }, []);
 
   useEffect(() => {
@@ -43,6 +61,9 @@ function TopCurrencyList() {
     );
     setFilteredRates(results);
   }, [search, allRates]);
+
+  const isAlreadySaved = (target) =>
+    userFavourites.some((fav) => fav.base === 'USD' && fav.target === target);
 
   const handleSave = async (item) => {
     const token = localStorage.getItem('token');
@@ -68,6 +89,7 @@ function TopCurrencyList() {
         }
       );
       alert(`✅ ${item.base} → ${item.target} saved!`);
+      setUserFavourites((prev) => [...prev, item]);
     } catch (err) {
       console.error('❌ Failed to save currency:', err);
       alert('Failed to save. It might already be in your favourites.');
@@ -122,20 +144,28 @@ function TopCurrencyList() {
               </div>
 
               <div className="flex items-center gap-4">
-                <span className="text-gray-800 font-semibold">
-                  {item.rate.toFixed(4)}
-                </span>
-                <button
-                  onClick={() => handleSave(item)}
-                  disabled={saving === item.target}
-                  className={`px-3 py-1 rounded text-sm text-white ${
-                    saving === item.target
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-blue-600 hover:bg-blue-700'
-                  }`}
+                <MiniChart base={item.base} target={item.target} />
+                <Link
+                  to={`/currency/graph/${item.base}/${item.target}`}
+                  className="text-sm text-blue-600 underline hover:text-blue-800"
                 >
-                  {saving === item.target ? 'Saving...' : 'Save'}
-                </button>
+                  View Graph
+                </Link>
+                {isAlreadySaved(item.target) ? (
+                  <span className="text-green-600 text-sm">Saved</span>
+                ) : (
+                  <button
+                    onClick={() => handleSave(item)}
+                    disabled={saving === item.target}
+                    className={`px-3 py-1 rounded text-sm text-white ${
+                      saving === item.target
+                        ? 'bg-gray-400 cursor-not-allowed'
+                        : 'bg-blue-600 hover:bg-blue-700'
+                    }`}
+                  >
+                    {saving === item.target ? 'Saving...' : 'Save'}
+                  </button>
+                )}
               </div>
             </div>
           ))}

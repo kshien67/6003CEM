@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import MiniChart from './MiniCurrencyChart';
 
 function ExchangeButMini() {
   const [rates, setRates] = useState([]);
@@ -70,6 +71,10 @@ function ExchangeButMini() {
                 <div className="text-right min-w-[60px]">
                   <span className="text-sm text-gray-800 font-semibold">
                     {item.rate ? item.rate.toFixed(2) : "—"}
+                    <div className="flex items-center gap-2 min-w-[140px] justify-end">
+                      <MiniChart base={item.base} target={item.target} />
+                    </div>
+
                   </span>
                 </div>
               </li>
@@ -79,7 +84,7 @@ function ExchangeButMini() {
           {/* 🔽 See more button */}
           <div className="mt-3 text-right">
             <button
-              onClick={() => navigate('/exchange')}
+              onClick={() => navigate('/currency')}
               className="text-blue-600 underline text-sm hover:text-blue-800"
             >
               See more →
