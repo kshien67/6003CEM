@@ -12,7 +12,9 @@ import RegisterPage from './components/RegisterPage';
 import CryptoList from './components/CryptoList';
 import CoinDetails from './components/CoinDetails';
 import Watchlist from './components/Watchlist';
-import CurrencyPage from './components/CurrencyPage'; // 👈 Import your Currency page
+import CurrencyPage from './components/CurrencyPage';
+import CurrencyGraphPage from './components/CurrencyGraphPage';
+ // 👈 Import your Currency page
 
 function App() {
   return (
@@ -32,6 +34,7 @@ function App() {
 
           {/* 💱 Currency Page */}
           <Route path="/currency" element={<CurrencyPage />} /> {/* 👈 New route here */}
+          <Route path="/currency/graph/:base/:target" element={<CurrencyGraphPage />} />
 
           {/* 💹 Crypto-related */}
           <Route path="/dashboard" element={<CryptoList />} />
